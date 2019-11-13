@@ -5,9 +5,11 @@ VisualStudioVersion = 16.0.29509.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0-Presentation", "0-Presentation", "{8A2C23DB-F616-4C6C-9738-DB3C2FA31B54}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Forms", "Presentation\Forms\Forms.csproj", "{332715EC-4479-4B2D-BEC8-571EC6A29F0E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Forms", "src\Presentation\Forms\Forms.csproj", "{332715EC-4479-4B2D-BEC8-571EC6A29F0E}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{653A00CE-C766-434D-B2A4-8A66F3B3161C}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1-Domain", "1-Domain", "{653A00CE-C766-434D-B2A4-8A66F3B3161C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "src\Domain\Domain.csproj", "{0060CD26-7F32-41B3-9452-59B773506C41}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,12 +21,17 @@ Global
 		{332715EC-4479-4B2D-BEC8-571EC6A29F0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{332715EC-4479-4B2D-BEC8-571EC6A29F0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{332715EC-4479-4B2D-BEC8-571EC6A29F0E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0060CD26-7F32-41B3-9452-59B773506C41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0060CD26-7F32-41B3-9452-59B773506C41}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0060CD26-7F32-41B3-9452-59B773506C41}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0060CD26-7F32-41B3-9452-59B773506C41}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{332715EC-4479-4B2D-BEC8-571EC6A29F0E} = {8A2C23DB-F616-4C6C-9738-DB3C2FA31B54}
+		{0060CD26-7F32-41B3-9452-59B773506C41} = {653A00CE-C766-434D-B2A4-8A66F3B3161C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8533FD03-F599-40B8-85E5-C89BC3CCF474}

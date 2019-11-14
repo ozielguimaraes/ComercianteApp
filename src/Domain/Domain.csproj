@@ -6,7 +6,6 @@
   <ItemGroup>
     <Folder Include="Commands\" />
     <Folder Include="CommandsHandler\" />
-    <Folder Include="Interfaces\Queries\" />
     <Folder Include="Enums\" />
     <Folder Include="ValueObjects\" />
     <Folder Include="Validations\" />

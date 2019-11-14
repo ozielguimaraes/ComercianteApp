@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Domain.Interfaces.Queries.Specifications.Bases;
 
 namespace Domain.Interfaces.Repositories.Bases
 {
@@ -21,8 +22,8 @@ namespace Domain.Interfaces.Repositories.Bases
 
         Task<List<T>> Search(ISpecification<T> specification, int pageNumber, int pageSize, CancellationToken cancellationToken);
 
-        Task<T> Find(CancellationToken cancellationToken, params object[] keys);
-
         Task<T> FirstOrDefault(ISpecification<T> specification, CancellationToken cancellationToken);
+
+        ValueTask<T> Find(CancellationToken cancellationToken, params object[] keys);
     }
 }

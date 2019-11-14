@@ -1,22 +1,32 @@
-﻿using Domain.Interfaces.Repositories.Bases;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Domain.Interfaces.Queries.Specifications.Bases;
+using Domain.Interfaces.Repositories.Bases;
+using Infrastructure.Data.Context;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data.Repository.Bases
 {
     public class ReadRepository<T> : IReadRepository<T> where T : class
     {
+        private readonly ComercianteContext _context;
+
+        public ReadRepository(ComercianteContext context)
+        {
+            _context = context;
+        }
+
         public virtual IQueryable<T> AsQuerable()
         {
-            return _contexto.Set<T>()
+            return _context.Set<T>()
                 .AsQueryable();
         }
 
         public virtual IQueryable<T> Where(ISpecification<T> specification)
         {
-            var query = _contexto.Set<T>()
+            var query = _context.Set<T>()
                 .Where(specification.Predicate);
 
             return query;
@@ -24,7 +34,7 @@ namespace Infrastructure.Data.Repository.Bases
 
         public Task<bool> All(ISpecification<T> specification, CancellationToken cancellationToken)
         {
-            var result = _contexto.Set<T>()
+            var result = _context.Set<T>()
                 .AllAsync(specification.Predicate, cancellationToken);
 
             return result;
@@ -32,7 +42,7 @@ namespace Infrastructure.Data.Repository.Bases
 
         public Task<bool> Any(ISpecification<T> specification, CancellationToken cancellationToken)
         {
-            var result = _contexto.Set<T>()
+            var result = _context.Set<T>()
                 .AnyAsync(specification.Predicate, cancellationToken);
 
             return result;
@@ -40,7 +50,7 @@ namespace Infrastructure.Data.Repository.Bases
 
         public virtual Task<int> Count(ISpecification<T> specification, CancellationToken cancellationToken)
         {
-            var result = _contexto.Set<T>()
+            var result = _context.Set<T>()
                 .CountAsync(specification.Predicate, cancellationToken);
 
             return result;
@@ -48,7 +58,7 @@ namespace Infrastructure.Data.Repository.Bases
 
         public virtual Task<List<T>> Search(ISpecification<T> specification, CancellationToken cancellationToken)
         {
-            var result = specification.Prepare(_contexto.Set<T>().AsQueryable())
+            var result = specification.Prepare(_context.Set<T>().AsQueryable())
                 .ToListAsync(cancellationToken);
 
             return result;
@@ -56,7 +66,7 @@ namespace Infrastructure.Data.Repository.Bases
 
         public virtual Task<List<T>> Search(ISpecification<T> specification, int pageNumber, int pageSize, CancellationToken cancellationToken)
         {
-            var query = specification.Prepare(_contexto.Set<T>().AsQueryable())
+            var query = specification.Prepare(_context.Set<T>().AsQueryable())
                 .Skip(pageNumber)
                 .Take(pageSize);
 
@@ -64,19 +74,20 @@ namespace Infrastructure.Data.Repository.Bases
             return entities;
         }
 
-        public virtual Task<T> Find(CancellationToken cancellationToken, params object[] keys)
+        public virtual Task<T> FirstOrDefault(ISpecification<T> specification, CancellationToken cancellationToken)
         {
-            var entity = _contexto.Set<T>()
+            var result = _context.Set<T>()
+                .FirstOrDefaultAsync(specification.Predicate, cancellationToken);
+
+            return result;
+        }
+
+        public virtual ValueTask<T> Find(CancellationToken cancellationToken, params object[] keys)
+        {
+            var entity = _context.Set<T>()
                 .FindAsync(keys, cancellationToken);
 
             return entity;
-        }
-
-        public virtual Task<T> FirstOrDefault(ISpecification<T> specification, CancellationToken cancellationToken)
-        {
-            var result = _contexto.Set<T>()
-                .FirstOrDefaultAsync(specification.Predicate, cancellationToken);
-            return result;
         }
     }
 }

@@ -2,17 +2,23 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Domain.Interfaces.Queries.Specifications.Bases;
+using Domain.Interfaces.Repositories.Bases;
+using Infrastructure.Data.Context;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data.Repository.Bases
 {
     public class ReadWriteRepository<T> : IReadWriteRepository<T> where T : class
     {
-        private readonly BaseContext _contexto;
+        private readonly ComercianteContext _contexto;
 
-        public ReadWriteRepository(BaseContext context)
+        public ReadWriteRepository(ComercianteContext context)
         {
             _contexto = context;
         }
+
+        #region Read
 
         public virtual IQueryable<T> AsQuerable()
         {
@@ -70,7 +76,15 @@ namespace Infrastructure.Data.Repository.Bases
             return entities;
         }
 
-        public virtual Task<T> Find(CancellationToken cancellationToken, params object[] keys)
+        public virtual Task<T> FirstOrDefault(ISpecification<T> specification, CancellationToken cancellationToken)
+        {
+            var result = _contexto.Set<T>()
+                .FirstOrDefaultAsync(specification.Predicate, cancellationToken);
+
+            return result;
+        }
+
+        public virtual ValueTask<T> Find(CancellationToken cancellationToken, params object[] keys)
         {
             var entity = _contexto.Set<T>()
                 .FindAsync(keys, cancellationToken);
@@ -78,12 +92,9 @@ namespace Infrastructure.Data.Repository.Bases
             return entity;
         }
 
-        public virtual Task<T> FirstOrDefault(ISpecification<T> specification, CancellationToken cancellationToken)
-        {
-            var result = _contexto.Set<T>()
-                .FirstOrDefaultAsync(specification.Predicate, cancellationToken);
-            return result;
-        }
+        #endregion Read
+
+        #region Write
 
         public virtual T Add(T entity)
         {
@@ -120,5 +131,7 @@ namespace Infrastructure.Data.Repository.Bases
         {
             return _contexto.SaveChangesAsync(cancellationToken);
         }
+
+        #endregion Write
     }
 }

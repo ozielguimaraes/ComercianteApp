@@ -1,9 +1,21 @@
 ﻿using Domain.Interfaces.Repositories.Bases;
+using Infrastructure.Data.Context;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Infrastructure.Data.Repository.Bases
 {
     public class WriteRepository<T> : IWriteRepository<T> where T : class
     {
+        private readonly ComercianteContext _contexto;
+
+        public WriteRepository(ComercianteContext context)
+        {
+            _contexto = context;
+        }
+
         public virtual T Add(T entity)
         {
             var result = _contexto.Set<T>().Add(entity);

@@ -13,5 +13,9 @@ namespace Domain.AggregatesModels.Base
         public Metadata()
         {
         }
+
+        public void Alterar() => Alteracao = DateTime.Now;
+
+        public void Excluir() => Exclusao = DateTime.Now;
     }
 }

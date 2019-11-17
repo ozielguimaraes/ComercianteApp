@@ -1,0 +1,6 @@
+﻿{
+  // LOCALHOST
+  "ConnectionStrings": {
+    "DefaultConnection": "Data Source=.;Initial Catalog=ComercianteDb;Integrated Security=True;"
+  }
+}
